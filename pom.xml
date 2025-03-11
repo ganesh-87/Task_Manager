@@ -11,6 +11,7 @@
 	<groupId>com.taskmanager</groupId>
 	<artifactId>task-manager-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>task-management-app</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -54,14 +55,15 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		
 		<!-- Lombok for reducing boilerplate code -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <!-- Lombok Annotation Processor -->
+        
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok-mapstruct-binding</artifactId>
