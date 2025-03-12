@@ -1,15 +1,29 @@
-# Use OpenJDK 17 as base image
-FROM eclipse-temurin:17-jdk
+# Use OpenJDK 17 as the base image
+FROM eclipse-temurin:17-jdk AS build
 
-# Set working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy JAR file into the container
-COPY target/*.jar app.jar
+# Copy the Maven wrapper and project files
+COPY mvnw pom.xml ./
+COPY .mvn .mvn
+COPY src src
 
-# Expose the port that Render will use
+# Build the application
+RUN ./mvnw clean package -DskipTests
+
+# Use a smaller JDK image for runtime
+FROM eclipse-temurin:17-jdk
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the built JAR from the previous stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose the port (Render will use this)
 ENV PORT=8080
 EXPOSE 8080
 
-# Run the Spring Boot application
+# Run the application
 CMD ["java", "-jar", "app.jar"]
